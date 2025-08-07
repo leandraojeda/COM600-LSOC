@@ -1,0 +1,11 @@
+<% include('layout', { body: null }) %>
+<h2>Nuevo Contacto</h2>
+<form method="POST" action="/add">
+  <div class="mb-3"><input name="nombres" class="form-control" placeholder="Nombres" required></div>
+  <div class="mb-3"><input name="apellidos" class="form-control" placeholder="Apellidos" required></div>
+  <div class="mb-3"><input type="date" name="fecha_nacimiento" class="form-control" required></div>
+  <div class="mb-3"><input name="direccion" class="form-control" placeholder="Dirección"></div>
+  <div class="mb-3"><input name="celular" class="form-control" maxlength="8" placeholder="Celular" required></div>
+  <div class="mb-3"><input name="correo" class="form-control" placeholder="Correo"></div>
+  <button type="submit" class="btn btn-success">Guardar</button>
+</form>

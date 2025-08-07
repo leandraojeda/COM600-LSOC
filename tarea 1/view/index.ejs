@@ -1,0 +1,26 @@
+<% include('layout', { body: null }) %>
+<h2>Contactos</h2>
+<a href="/add" class="btn btn-primary mb-3">Agregar contacto</a>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Nombres</th><th>Apellidos</th><th>Fecha Nac.</th><th>Dirección</th><th>Celular</th><th>Correo</th><th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% contactos.forEach(c => { %>
+      <tr>
+        <td><%= c.nombres %></td>
+        <td><%= c.apellidos %></td>
+        <td><%= c.fecha_nacimiento.toISOString().split('T')[0] %></td>
+        <td><%= c.direccion %></td>
+        <td><%= c.celular %></td>
+        <td><%= c.correo %></td>
+        <td>
+          <a href="/edit/<%= c.id %>" class="btn btn-warning btn-sm">Editar</a>
+          <a href="/delete/<%= c.id %>" class="btn btn-danger btn-sm">Eliminar</a>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
