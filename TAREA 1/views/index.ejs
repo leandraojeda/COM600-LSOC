@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tarea 1 - CRUD</title>
+    <style>
+        body { font-family: sans-serif; padding: 30px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        .form-crear { margin-bottom: 20px; }
+        .btn-borrar { color: red; cursor: pointer; border: 1px solid red; background: none; }
+        .btn-del {color: red;}
+    </style>
+</head>
+<body>
+
+    <h1>Usuarios</h1>
+
+    <form action="/users" method="POST">
+        <input type="text" name="name" placeholder="Nombre" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <button type="submit" class="btn-add">Agregar</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% users.forEach(user => { %>
+                <tr>
+                    <td><%= user.id %></td>
+                    <td><%= user.name %></td>
+                    <td><%= user.email %></td>
+                    <td>
+                        <form action="/users/delete/<%= user.id %>" method="POST" style="display:inline; background:none; padding:0; margin:0;">
+                            <button type="submit" class="btn-del">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+</body>
+</html>
