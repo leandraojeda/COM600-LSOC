@@ -1,0 +1,183 @@
+arte 3 – Práctica (los 28 enunciados – comandos listos)
+
+Insertar un alumno mujer con dos materias y padre de apellido "Torres"
+
+JavaScriptdb.alumnos.insertOne({
+  nombres: "Sofía",
+  apellidos: "Morales Torres",
+  sexo: "F",
+  casado: false,
+  fecha_nacimiento: new Date("2002-04-18"),
+  materias: ["SIS256", "COM350"],
+  padre: { nombre: "Miguel", apellido: "Torres" }
+})
+
+Insertar cinco alumnos a la vez con datos variados
+
+JavaScriptdb.alumnos.insertMany([
+  { nombres: "Diego", apellidos: "Cruz", sexo: "M", casado: true, fecha_nacimiento: new Date("1997-09-05"), materias: ["SIS258"] },
+  { nombres: "Valeria", apellidos: "Pérez", sexo: "F", casado: false, fecha_nacimiento: new Date("2004-02-14"), materias: ["COM350", "SIS00"] },
+  { nombres: "Mateo", apellidos: "Rojas", sexo: "M", casado: false, fecha_nacimiento: new Date("2000-06-22"), materias: ["SIS256", "SIS258"] },
+  { nombres: "Lucía", apellidos: "Herrera", sexo: "F", casado: true, fecha_nacimiento: new Date("1994-12-30"), materias: [] },
+  { nombres: "Santiago", apellidos: "Vega", sexo: "M", casado: false, fecha_nacimiento: new Date("2001-10-09"), materias: ["SIS00"] }
+])
+
+Insertar un alumno sin campo padre
+
+JavaScriptdb.alumnos.insertOne({
+  nombres: "Emilia",
+  apellidos: "Díaz",
+  sexo: "F",
+  casado: false,
+  fecha_nacimiento: new Date("1999-07-25"),
+  materias: ["COM350"]
+})
+
+Insertar un alumno hombre casado, nacido en 1990
+
+JavaScriptdb.alumnos.insertOne({
+  nombres: "Fernando",
+  apellidos: "Castro",
+  sexo: "M",
+  casado: true,
+  fecha_nacimiento: new Date("1990-03-12"),
+  materias: ["SIS258", "COM350"]
+})
+
+Insertar un alumno con 4 materias y padre "Carlos Pérez"
+
+JavaScriptdb.alumnos.insertOne({
+  nombres: "Isabel",
+  apellidos: "Nuñez",
+  sexo: "F",
+  casado: false,
+  fecha_nacimiento: new Date("1998-11-08"),
+  materias: ["SIS256", "SIS258", "COM350", "SIS00"],
+  padre: { nombre: "Carlos", apellido: "Pérez" }
+})
+
+Insertar un alumno solo con "COM350" como materia
+
+JavaScriptdb.alumnos.insertOne({
+  nombres: "Rodrigo",
+  apellidos: "Mendoza",
+  sexo: "M",
+  casado: false,
+  fecha_nacimiento: new Date("2003-01-30"),
+  materias: ["COM350"]
+})
+
+Listar alumnos cuyo padre tenga nombre "Luis" o "Miguel"
+
+JavaScriptdb.alumnos.find(
+  { $or: [ {"padre.nombre": "Luis"}, {"padre.nombre": "Miguel"} ] },
+  { _id: 0, nombres: 1, apellidos: 1, "padre.nombre": 1 }
+).pretty()
+
+Mostrar alumnos no casados que tengan "SIS256"
+
+JavaScriptdb.alumnos.find(
+  { casado: false, materias: "SIS256" },
+  { _id: 0, nombres: 1, apellidos: 1, materias: 1 }
+).pretty()
+
+Contar alumnos con más de 2 materias
+
+
+db.alumnos.countDocuments({ $expr: { $gt: [ { $size: "$materias" }, 2 ] } })
+
+Mostrar los 10 más viejos con nombres y fecha_nacimiento
+
+
+db.alumnos.find( {}, { _id: 0, nombres: 1, apellidos: 1, fecha_nacimiento: 1 } ).sort({ fecha_nacimiento: 1 }).limit(10).pretty()
+
+Buscar alumnos con "COM350" y "SIS00" (ambas)
+
+
+db.alumnos.find( { materias: { $all: ["COM350", "SIS00"] } },{ _id: 0, nombres: 1, apellidos: 1, materias: 1 }).pretty()
+
+Mostrar solo nombres y sexo de las alumnas (mujeres)
+
+JavaScript
+db.alumnos.find( { sexo: "F" },{ _id: 0, nombres: 1, sexo: 1 }).pretty()
+
+Ordenar todos los alumnos por apellido ascendente
+
+JavaScriptdb.alumnos.find( {},{ _id: 0, nombres: 1, apellidos: 1 }).sort({ apellidos: 1 }).pretty()
+
+Listar alumnos nacidos entre 1998 y 2003
+
+JavaScript
+db.alumnos.find({ fecha_nacimiento: { $gte: new Date("1998-01-01"), $lte: new Date("2003-12-31") } },{ _id: 0, nombres: 1, apellidos: 1, fecha_nacimiento: 1 }).pretty()
+
+Mostrar alumnos cuyo apellido termine en "ez" (insensible a mayúsculas)
+
+JavaScript
+db.alumnos.find(
+  { apellidos: { $regex: "ez$", $options: "i" } },
+  { _id: 0, nombres: 1, apellidos: 1 }
+).pretty()
+
+Contar alumnos casados y con "SIS258"
+
+JavaScriptdb.alumnos.countDocuments({ casado: true, materias: "SIS258" })
+
+Cambiar el nombre "Luis" por "Luis Alberto"
+
+JavaScript
+db.alumnos.updateMany({ nombres: "Luis" },{ $set: { nombres: "Luis Alberto" } })
+
+Agregar "SIS777" a todos los alumnos con "COM350"
+
+JavaScript
+db.alumnos.updateMany({ materias: "COM350" },{ $addToSet: { materias: "SIS777" } })
+
+Poner casado: false a todos con menos de 2 materias
+
+JavaScript
+db.alumnos.updateMany( { $expr: { $lt: [ { $size: "$materias" }, 2 ] } },{ $set: { casado: false } })
+
+Quitar "SIS256" de todos los que la tengan
+
+JavaScript
+db.alumnos.updateMany( { materias: "SIS256" }, { $pull: { materias: "SIS256" } }
+)
+
+Cambiar el nombre del padre "Juan" a "Juan José"
+
+JavaScript
+db.alumnos.updateMany({ "padre.nombre": "Juan" },{ $set: { "padre.nombre": "Juan José" } })
+
+Agregar un campo activo: true a todos los documentos
+
+JavaScript
+db.alumnos.updateMany({},{ $set: { activo: true } })
+
+Eliminar todos los alumnos hombres
+
+JavaScript
+db.alumnos.deleteMany({ sexo: "M" })
+
+Eliminar a quien tenga "SIS777" como materia
+
+JavaScriptdb.alumnos.deleteMany({ materias: "SIS777" })
+
+Eliminar a los alumnos cuyo padre tenga apellido "Ramírez"
+
+JavaScriptdb.alumnos.deleteMany({ "padre.apellido": "Ramírez" })
+
+Eliminar a los que nacieron después de 2004
+
+JavaScriptdb.alumnos.deleteMany({ fecha_nacimiento: { $gt: new Date("2004-12-31") } })
+
+Eliminar todos los casados
+
+JavaScriptdb.alumnos.deleteMany({ casado: true })
+
+Eliminar al primer alumno que tenga "SIS258"
+
+JavaScriptdb.alumnos.deleteOne({ materias: "SIS258" })
+Copia estos comandos directamente en tu shell. Usa .pretty() en los find para que la salida sea legible en capturas.
+Para el .txt del repositorio: pega solo los comandos (sin comentarios ni salidas).
+Para el PDF: incluye enunciado + comando + salida (captura o texto).
+Si necesitas ajustar algún comando o ver un ejemplo de salida específica, dime cuál número y te ayudo. ¡Ya casi terminas la práctica! 💪

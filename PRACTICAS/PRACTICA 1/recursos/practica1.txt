@@ -1,0 +1,57 @@
+--- CREACIÓN ---
+--1--
+db.alumnos.insertOne({
+    nombres: "Carlos",
+    apellidos: "López",
+    sexo: "M",
+    casado: false,
+    fecha_nacimiento: new Date("2001-05-10"),
+    materias: ["SIS256", "SIS258"],
+    padre: { nombre: "Juan", apellido: "López" }
+})
+--2--
+
+db.alumnos.insertMany([
+    { nombres: "Ana", apellidos: "Pérez", sexo: "F", casado: true, fecha_nacimiento: new Date("1999-03-20"), materias: ["COM350"], padre: { nombre: "Pedro", apellido: "Pérez" } },
+    { nombres: "Luis", apellidos: "Torres", sexo: "M", casado: false, fecha_nacimiento: new Date("2002-11-15"), materias: ["SIS256", "SIS00"], padre: { nombre: "Miguel", apellido: "Torres" } },
+    { nombres: "Elena", apellidos: "Ramírez", sexo: "F", casado: false, fecha_nacimiento: new Date("2000-07-05"), materias: ["SIS258", "COM350"], padre: { nombre: "Carlos", apellido: "Ramírez" } }
+])
+--3--
+
+db.alumnos.insertOne({
+    nombres: "Jorge",
+    apellidos: "García",
+    sexo: "M",
+    casado: false,
+    fecha_nacimiento: new Date("1998-08-12"),
+    materias: [],
+    padre: { nombre: "Luis", apellido: "García" }
+})
+
+--- CONSULTAS ---
+-- 1 --
+db.alumnos.find({ materias: { $in: ["SIS256", "COM350"] } }, { _id: 0, nombres: 1, apellidos: 1, materias: 1 })
+-- 2 --
+db.alumnos.find({ fecha_nacimiento: { $gt: new Date("2000-01-01") }, casado: true })
+-- 3 --
+db.alumnos.find({ $or: [{ sexo: "F" }, { "padre.apellido": "Pérez" }] })
+-- 4 --
+db.alumnos.countDocuments({ materias: "SIS258" })
+-- 5 --
+db.alumnos.find({}, { _id: 0, nombres: 1, apellidos: 1, fecha_nacimiento: 1 }).sort({ fecha_nacimiento: -1 }).limit(3)
+
+--- ACTUALIZACIONES ---
+-- 1 --
+db.alumnos.updateOne({ nombres: "Carlos" }, { $addToSet: { materias: "SIS999" } })
+-- 2--
+db.alumnos.updateMany({ materias: "SIS258" }, { $set: { casado: true } })
+-- 3--
+db.alumnos.updateMany({ materias: "SIS00" }, { $pull: { materias: "SIS00" } })
+
+--- ELIMINACIONES ---
+-- 1 ---
+db.alumnos.deleteOne({ nombres: "Ana", apellidos: /Pérez/ })
+-- 2--
+db.alumnos.deleteMany({ materias: { $size: 0 } })
+-- 3--
+db.alumnos.deleteMany({ fecha_nacimiento: { $lt: new Date("1995-01-01") } })

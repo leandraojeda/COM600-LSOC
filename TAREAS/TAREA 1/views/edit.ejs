@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editar Libro</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7f6;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2c3e50;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #2605e0;
+      box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #1c19b9;
+    }
+
+    .link-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    a {
+      color: #007BFF;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Editar Libro</h2>
+
+    <form action="/edit//<%= libro.id %>" method="POST">
+      
+      <label for="titulo">Título:</label>
+      <input 
+        type="text" 
+        id="titulo" 
+        name="titulo" 
+        value="<%= libro.titulo %>" 
+        required 
+      />
+
+      <label for="autor">Autor:</label>
+      <input 
+        type="text" 
+        id="autor" 
+        name="autor" 
+        value="<%= libro.autor %>" 
+        required 
+      />
+
+      <label for="precio">Precio:</label>
+      <input 
+        type="number" 
+        id="precio" 
+        name="precio" 
+        step="0.01" 
+        value="<%= libro.precio %>" 
+        required 
+      />
+
+      <label for="categoria">Categoría:</label>
+      <input 
+        type="text" 
+        id="categoria" 
+        name="categoria" 
+        value="<%= libro.categoria %>" 
+        required 
+      />
+
+      <button type="submit">Guardar Cambios</button>
+      
+      <div class="link-container">
+        <a href="/">← Volver a la lista</a>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>
