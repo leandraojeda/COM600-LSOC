@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Editar Libro</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -29,11 +27,7 @@
       max-width: 450px;
     }
 
-    h2 {
-      text-align: center;
-      margin-bottom: 25px;
-      color: #2c3e50;
-    }
+    h2 { text-align: center; margin-bottom: 25px; color: #2c3e50; }
 
     label {
       display: block;
@@ -54,7 +48,7 @@
     input:focus {
       outline: none;
       border-color: #2605e0;
-      box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
+      box-shadow: 0 0 5px rgba(38, 5, 224, 0.2);
     }
 
     button {
@@ -70,24 +64,28 @@
       transition: background-color 0.3s;
     }
 
-    button:hover {
-      background-color: #1c19b9;
-    }
+    button:hover { background-color: #1c19b9; }
 
     .link-container {
       text-align: center;
       margin-top: 20px;
     }
 
-    a {
-      color: #007BFF;
+    /* Estilo para que el enlace parezca un botón secundario */
+    .btn-secondary {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background-color: #2c3e79;
+      color: white !important;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 6px;
+      transition: background-color 0.3s;
     }
 
-    a:hover {
-      text-decoration: underline;
-    }
+    .btn-secondary:hover { background-color: #1e0a74; }
   </style>
 </head>
 <body>
@@ -95,7 +93,7 @@
   <div class="container">
     <h2>Editar Libro</h2>
 
-    <form action="/edit//<%= libro.id %>" method="POST">
+    <form action="/edit/<%= libro.id %>" method="POST">
       
       <label for="titulo">Título:</label>
       <input 
@@ -137,7 +135,7 @@
       <button type="submit">Guardar Cambios</button>
       
       <div class="link-container">
-        <a href="/">← Volver a la lista</a>
+        <a href="/" class="btn-secondary">Ver Lista</a>
       </div>
     </form>
   </div>
