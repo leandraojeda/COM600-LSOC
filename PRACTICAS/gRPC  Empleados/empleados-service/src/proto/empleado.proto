@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package empleadoPackage;
+
+service EmpleadoService {
+  rpc CrearEmpleado (CrearEmpleadoRequest) returns (EmpleadoResponse);
+  rpc ListarEmpleados (ListarRequest) returns (ListaEmpleadosResponse);
+  rpc EliminarEmpleado (EliminarEmpleadoRequest) returns (Respuesta);
+}
+
+message CrearEmpleadoRequest {
+  string nombres = 1;
+  string apellidos = 2;
+  string cargo = 3;
+}
+
+message EliminarEmpleadoRequest {
+  int32 id = 1;
+}
+
+message ListarRequest {}
+
+message EmpleadoResponse {
+  int32 id = 1;
+  string nombres = 2;
+  string apellidos = 3;
+  string cargo = 4;
+}
+
+message ListaEmpleadosResponse {
+  repeated EmpleadoResponse empleados = 1;
+}
+
+message Respuesta {
+  bool exito = 1;
+  string mensaje = 2;
+}
