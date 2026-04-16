@@ -1,0 +1,8 @@
+Desarrolla una API REST en Node.js con Express y MongoDB para el recurso libro. Cada libro debe tener un título, ,autor, editorial, año, descripción ,numero_pagina
+Implementar los siguientes endpoints:
+o GET /libro → Obtener todas las tareas
+o POST /libro→ Crear una nueva tarea
+o PUT /libro/:id → Actualizar el estado de una tarea
+o DELETE /libro/:id → Eliminar una tarea
+Usar MongoDB como base de datos.
+Desplegar la aplicación en un contenedor Docker con la imagen de Node.js y otro contenedor para MongoDB usando Docker Compose.

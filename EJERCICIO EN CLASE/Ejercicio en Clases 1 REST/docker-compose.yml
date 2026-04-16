@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: libros-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb://mongo:27017/libro
+    depends_on:
+      - mongo
+    networks:
+      - libros-network
+    restart: unless-stopped
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  mongo:
+    image: mongo:6
+    container_name: libros-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=libro
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - libros-network
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
+
+networks:
+  libros-network:
+    driver: bridge
