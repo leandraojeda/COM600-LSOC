@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: trabajadores-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb://mongo:27017/trabajadores
+    depends_on:
+      - mongo
+    networks:
+      - trabajadores-network
+    restart: unless-stopped
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  mongo:
+    image: mongo:6
+    container_name: trabajadores-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=trabajadores
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - trabajadores-network
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
+
+networks:
+  trabajadores-network:
+    driver: bridge

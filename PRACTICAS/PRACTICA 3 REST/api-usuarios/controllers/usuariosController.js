@@ -1,7 +1,7 @@
 const db = require('../db');
 
 
-//GET todos y EDAD
+
 exports.getAll = (req, res) => {
   const edad = req.query.edad;
   const page = parseInt(req.query.page) || 1;
