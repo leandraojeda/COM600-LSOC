@@ -1,0 +1,25 @@
+// kapacitor.tick
+// ─────────────────────────────────────────────────────────────────
+// Regla de alerta: se dispara cuando errorCount supera 3
+// en una ventana de 30 segundos.
+//
+// Para cargar esta regla en Kapacitor después de que esté corriendo:
+//   kapacitor define errorCount_alert -type stream -tick /etc/kapacitor/kapacitor.tick -dbrp telegraf.autogen
+//   kapacitor enable errorCount_alert
+// ─────────────────────────────────────────────────────────────────
+
+stream
+  |from()
+    .measurement('microservicio_metrics')
+    .where(lambda: "service" == 'microservicio-ticks')
+  |window()
+    .period(30s)
+    .every(10s)
+  |max('errorCount')
+    .as('max_errors')
+  |alert()
+    .id('errorCount_alert')
+    .message('ALERTA: errorCount supera 3 — valor actual: {{ index .Fields "max_errors" }}')
+    .warn(lambda: "max_errors" > 3)
+    .crit(lambda: "max_errors" > 10)
+    .log('/tmp/kapacitor_alerts.log')

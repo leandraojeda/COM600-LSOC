@@ -1,0 +1,28 @@
+# Dependencias Node.js — nunca subir al repositorio
+node_modules/
+npm-debug.log*
+
+# Variables de entorno sensibles
+.env
+.env.local
+.env.*.local
+
+# Datos de Docker volumes (generados al correr los contenedores)
+esdata/
+influxdata/
+
+# Logs locales
+*.log
+/tmp/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
